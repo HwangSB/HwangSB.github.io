@@ -1,0 +1,106 @@
+---
+layout: default
+title: Categories
+permalink: /categories/
+---
+
+<div class="home">
+  <h1>{{ page.title }}</h1>
+  
+  <div class="category-cloud">
+    {% assign categories = site.categories | sort %}
+    {% for category in categories %}
+      <a href="/category/{{ category[0] | slugify }}" class="category-link" data-count="{{ category[1].size }}">
+        {{ category[0] }} <span class="category-count">({{ category[1].size }})</span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <hr style="margin: 2em 0;">
+
+  {% for category in categories %}
+    <h2 id="{{ category[0] | slugify }}">
+      <a href="/category/{{ category[0] | slugify }}/">{{ category[0] }}</a>
+      <span class="post-count">({{ category[1].size }})</span>
+    </h2>
+    
+    <ul class="post-list">
+      {% assign posts = category[1] | sort: 'date' | reverse %}
+      {% for post in posts limit:5 %}
+        <li>
+          <span class="post-meta">{{ post.date | date: "%Y년 %m월 %d일" }}</span>
+          <h3>
+            <a class="post-link" href="{{ post.url | relative_url }}">
+              {{ post.title | escape }}
+            </a>
+          </h3>
+          {% if post.excerpt %}
+            <p>{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+          {% endif %}
+        </li>
+      {% endfor %}
+      
+      {% if category[1].size > 5 %}
+        <li><a href="/category/{{ category[0] | slugify }}/">더 많은 {{ category[0] }} 포스트 보기 →</a></li>
+      {% endif %}
+    </ul>
+  {% endfor %}
+</div>
+
+<style>
+  .category-cloud {
+    text-align: center;
+    line-height: 2;
+    margin: 2em 0;
+  }
+  
+  .category-link {
+    display: inline-block;
+    margin: 0.25em;
+    padding: 0.5em 1em;
+    background-color: #f8f9fa;
+    color: #e67e22;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+  }
+  
+  .category-link:hover {
+    background-color: #e67e22;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+  }
+  
+  .category-count {
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+  
+  .post-count {
+    color: #666;
+    font-size: 0.8em;
+    font-weight: normal;
+  }
+  
+  .post-list li {
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .post-list li:last-child {
+    border-bottom: none;
+  }
+  
+  h2 a {
+    text-decoration: none;
+    color: #2c3e50;
+  }
+  
+  h2 a:hover {
+    color: #3498db;
+  }
+</style>

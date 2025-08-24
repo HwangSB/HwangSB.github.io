@@ -1,35 +1,67 @@
 title: Hwang's Blog
 email: hsb990105@gmail.com
-# It will appear in your document head meta (for Google search results)
-# and in your feed.xml site description.
-description: >
-  Development & Study
+description: >-
+  Development & Study Blog
+
 baseurl: ""
 url: "https://hwangsb.github.io"
-twitter_username: HwangSB
-github_username:  HwangSB
+github_username: HwangSB
+
+# Author information
+author:
+  name: Hwang SangBeom
+  email: hsb990105@gmail.com
+  github: HwangSB
+
+# Site settings
+lang: ko-KR
+timezone: Asia/Seoul
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-archives
 
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+# Pagination
+paginate: 10
+paginate_path: "/blog/page:num/"
+
+# Archives
+jekyll-archives:
+  enabled:
+    - year
+    - month
+    - categories
+    - tags
+  layout: archive
+  permalinks:
+    year: '/:year/'
+    month: '/:year/:month/'
+    category: '/category/:name/'
+    tag: '/tag/:name/'
+
+# SEO and social
+social:
+  name: Hwang SangBeom
+  links:
+    - https://github.com/HwangSB
+
+# Minima theme settings
+minima:
+  date_format: "%Y년 %m월 %d일"
+  social_links:
+    github: HwangSB
+    rss: rss
+
+# Navigation menu
+header_pages:
+  - about.md
+  - categories.html
+  - tags.html
+
+# Show excerpts on homepage
+show_excerpts: true

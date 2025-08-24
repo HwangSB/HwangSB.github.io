@@ -1,0 +1,97 @@
+---
+layout: default
+title: Tags
+permalink: /tags/
+---
+
+<div class="home">
+  <h1>{{ page.title }}</h1>
+  
+  <div class="tag-cloud">
+    {% assign tags = site.tags | sort %}
+    {% for tag in tags %}
+      <a href="/tag/{{ tag[0] | slugify }}/" class="tag-link" data-count="{{ tag[1].size }}">
+        #{{ tag[0] }} <span class="tag-count">({{ tag[1].size }})</span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <hr style="margin: 2em 0;">
+
+  {% for tag in tags %}
+    <h2 id="{{ tag[0] | slugify }}">
+      <a href="/tag/{{ tag[0] | slugify }}/">#{{ tag[0] }}</a>
+      <span class="post-count">({{ tag[1].size }})</span>
+    </h2>
+    
+    <ul class="post-list">
+      {% assign posts = tag[1] | sort: 'date' | reverse %}
+      {% for post in posts limit:3 %}
+        <li>
+          <span class="post-meta">{{ post.date | date: "%Y년 %m월 %d일" }}</span>
+          <h3>
+            <a class="post-link" href="{{ post.url | relative_url }}">
+              {{ post.title | escape }}
+            </a>
+          </h3>
+        </li>
+      {% endfor %}
+      
+      {% if tag[1].size > 3 %}
+        <li><a href="/tag/{{ tag[0] | slugify }}/">더 많은 #{{ tag[0] }} 포스트 보기 →</a></li>
+      {% endif %}
+    </ul>
+  {% endfor %}
+</div>
+
+<style>
+  .tag-cloud {
+    text-align: center;
+    line-height: 2;
+    margin: 2em 0;
+  }
+  
+  .tag-link {
+    display: inline-block;
+    margin: 0.25em;
+    padding: 0.5em 1em;
+    background-color: #f8f9fa;
+    color: #3498db;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+  }
+  
+  .tag-link:hover {
+    background-color: #3498db;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+  }
+  
+  .tag-count {
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+  
+  .post-count {
+    color: #666;
+    font-size: 0.8em;
+    font-weight: normal;
+  }
+  
+  .post-list li {
+    margin-bottom: 1em;
+  }
+  
+  h2 a {
+    text-decoration: none;
+    color: #2c3e50;
+  }
+  
+  h2 a:hover {
+    color: #3498db;
+  }
+</style>
